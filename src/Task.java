@@ -1,19 +1,42 @@
 import java.time.LocalDate;
 
 public class Task {
-    private LocalDate dueDate;
-    private boolean hasDependent = false,
-            possible = true,
+    private LocalDate dueDate, doneDate;
+    private String title;
+    private DependentTask dependentTask = null;
+    private boolean possible = true,
             complete = false;
 
     public Task(String title, LocalDate dueDate)
     {
+        this.title = title;
         this.dueDate = dueDate;
     }
 
-    public void finish()
+    public void setTitle(String t)
     {
-        complete = true;
+        title = t;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setComplete()
+    {
+        if (!complete) {
+            complete = true;
+            doneDate = LocalDate.now();
+            if (hasDependent())
+            {
+                dependentTask.setPossible(true);
+            }
+        }
+    }
+
+    public void setPossible(boolean possible)
+    {
+        this.possible = possible;
     }
 
     public boolean isPossible()
@@ -25,14 +48,16 @@ public class Task {
         return complete;
     }
 
-    public void setDependent()
+
+    public void setDependent(DependentTask dependentTask)
     {
-        hasDependent = true;
+        this.dependentTask = dependentTask;
     }
+
 
     public boolean hasDependent()
     {
-        return hasDependent;
+        return dependentTask != null;
     }
 
     public void setDueDate(LocalDate newDate)
