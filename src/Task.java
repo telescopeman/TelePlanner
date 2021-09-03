@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Task {
     private LocalDate dueDate, doneDate;
@@ -48,6 +49,50 @@ public class Task {
         return complete;
     }
 
+    private static String ordinal(int i) {
+        String[] suffixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+        return switch (i % 100) {
+            case 11, 12, 13 -> "th";
+            default -> suffixes[i % 10];
+        };
+    }
+
+    private static String toSentenceCase(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+
+
+    public String formatDueDate()
+    {
+        long i = ChronoUnit.DAYS.between(LocalDate.now(),dueDate);
+        System.out.println(i);
+        if (i ==0)
+        {
+            return "today";
+        }
+        else if (i==1)
+        {
+            return "tomorrow";
+        }
+        else if (i < 7)
+        {
+            return toSentenceCase(dueDate.getDayOfWeek().toString());
+        }
+        else if (i < 14)
+        {
+            return "next " + toSentenceCase(dueDate.getDayOfWeek().toString());
+        }
+        else if (i < 365)
+        {
+            int day_of_month = dueDate.getDayOfMonth();
+            return toSentenceCase(dueDate.getMonth().toString()) + " " +
+                    day_of_month + ordinal(day_of_month);
+        }
+        else
+        {
+            return dueDate.toString();
+        }
+    }
 
     public void setDependent(DependentTask dependentTask)
     {
