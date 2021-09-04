@@ -10,26 +10,6 @@ import java.util.Arrays;
 public class Alphabet {
 
     /**
-     *  The octal alphabet { 0, 1, 2, 3, 4, 5, 6, 7 }.
-     */
-    public static final Alphabet OCTAL = new Alphabet("01234567");
-
-    /**
-     *  The decimal alphabet { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.
-     */
-    public static final Alphabet DECIMAL = new Alphabet("0123456789");
-
-    /**
-     *  The hexadecimal alphabet { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F }.
-     */
-    public static final Alphabet HEXADECIMAL = new Alphabet("0123456789ABCDEF");
-
-    /**
-     *  The DNA alphabet { A, C, T, G }.
-     */
-    public static final Alphabet DNA = new Alphabet("ACGT");
-
-    /**
      *  The lowercase alphabet { a, b, c, ..., z }.
      */
     public static final Alphabet LOWERCASE = new Alphabet("abcdefghijklmnopqrstuvwxyz");
