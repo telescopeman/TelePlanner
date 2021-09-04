@@ -1,6 +1,5 @@
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import java.awt.Font;
 import java.awt.GridLayout;
 
 public class TaskPanel extends LinePanel {
@@ -10,7 +9,7 @@ public class TaskPanel extends LinePanel {
 
     public TaskPanel(Task task,UI ui)
     {
-        super(Font.PLAIN,20);
+        super(STANDARD_FONT);
         setLayout(new GridLayout(1,3));
         label1 = new JLabel(task.getTitle());
         label2 = new JLabel("due " + task.formatDueDate());

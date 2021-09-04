@@ -5,13 +5,13 @@ import java.awt.Dimension;
 
 public class LinePanel extends JPanel {
     private static final double LINE_SPACING = 1.5;
+    private static final String FONT_NAME = "Consolas";
+    protected static final Font STANDARD_FONT = new Font(FONT_NAME,Font.PLAIN,20),
+            HEADER_FONT = new Font(FONT_NAME,Font.BOLD,30);
 
-
-    public LinePanel(int style, int size)
+    public LinePanel(Font font)
     {
-
-        int myStyle = (style & ~0x03) == 0 ? style : 0;
-        setFont(new Font("Consolas",myStyle, size));
+        setFont(font);
         int height = (int) ((double)getFont().getSize() * LINE_SPACING);
         Dimension myDim = new Dimension(UI.WIDTH,height);
         setSize(myDim);
