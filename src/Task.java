@@ -17,8 +17,17 @@ public class Task {
 
     public Task(String title, LocalDate dueDate)
     {
+        this(title,dueDate,false);
+    }
+
+    public Task(String title, LocalDate dueDate, boolean isDone)
+    {
         this.title = title;
         this.dueDate = dueDate;
+        if (isDone)
+        {
+            markAsComplete();
+        }
     }
 
     public void setTitle(String t)
@@ -48,9 +57,9 @@ public class Task {
         return doneDate;
     }
 
-    public void setPossible(boolean possible)
+    protected void setPossible(boolean p)
     {
-        this.possible = possible;
+        possible = p;
     }
 
     public boolean isPossible()

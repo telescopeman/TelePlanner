@@ -5,8 +5,11 @@ public class DependentTask extends Task{
 
     public DependentTask(String name, LocalDate dueDate, Task myDependency) {
         super(name,dueDate);
-        setPossible(false);
+        if (!myDependency.isComplete()) {
+            setPossible(false);
+        }
         myIndex = global_index;
+        global_index++;
         myDependency.setDependent(this);
     }
 }

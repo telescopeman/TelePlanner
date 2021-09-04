@@ -2,15 +2,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class UI extends JFrame {
     public static final int WIDTH = 800;
     private static final int HEIGHT = 1200;
-    private final JPanel innerPanel = new JPanel();
+    public final JPanel innerPanel = new JPanel();
     private ArrayList<Task> currentSchedule;
-
 
     public static void main(String [] args)
     {
@@ -27,25 +25,17 @@ public class UI extends JFrame {
         innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
         add(outer);
 
-        Task essay = new Task("Essay", LocalDate.of(2021,9,4));
-
-        final ArrayList<Task> mySchedule = new ArrayList<>();
-        mySchedule.add(essay);
-        mySchedule.add(new Task("Test", LocalDate.of(2021,9,5)));
-        mySchedule.add(new DependentTask("Essay Revisions",
-                LocalDate.of(2021,9,13),essay));
-        mySchedule.add(new Task("Another Test", LocalDate.of(2021,10,5)));
-
+        final ArrayList<Task> mySchedule = Utility.getTestSchedule();
         load(mySchedule);
 
     }
     private void load(ArrayList<Task> schedule)
     {
         currentSchedule = schedule;
-        load();
+        refresh();
     }
 
-    public void load()
+    public void refresh()
     {
         innerPanel.removeAll();
         innerPanel.revalidate();
@@ -55,11 +45,27 @@ public class UI extends JFrame {
             panels.add(new TaskPanel(task,this));
         }
 
-        innerPanel.add(new HeaderPanel("Assignments"));
+        new TaskScanner(this,"Done:") {
+            @Override
+            protected boolean validate(Task task) {
+                return task.isComplete();
+            }
+        }.batchAdd(panels);
+        new TaskScanner(this,"Assignments:") {
+            @Override
+            protected boolean validate(Task task) {
+                return true;
+            }
+        }.batchAdd(panels);
 
-        for (TaskPanel taskPanel : panels)
-        {
-            innerPanel.add(taskPanel);
-        }
+        innerPanel.revalidate();
     }
+
+
+
+
+
+
+
+
 }
