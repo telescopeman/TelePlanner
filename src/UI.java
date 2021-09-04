@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class UI extends JFrame {
     public static final int WIDTH = 800;
     private static final int HEIGHT = 1200;
-    public final JPanel innerPanel = new JPanel();
+    private final JPanel INNER_PANEL = new JPanel();
     private ArrayList<Task> currentSchedule;
 
     public static void main(String [] args)
@@ -18,11 +18,11 @@ public class UI extends JFrame {
     public UI()
     {
         setTitle("TelePlanner");
-        setVisible(true);
         setSize(WIDTH,HEIGHT);
-        JScrollPane outer = new JScrollPane(innerPanel);
+        setVisible(true);
+        JScrollPane outer = new JScrollPane(INNER_PANEL);
         outer.getVerticalScrollBar().setUnitIncrement(16);
-        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
+        INNER_PANEL.setLayout(new BoxLayout(INNER_PANEL, BoxLayout.Y_AXIS));
         add(outer);
 
         final ArrayList<Task> mySchedule = Utility.getTestSchedule();
@@ -37,28 +37,27 @@ public class UI extends JFrame {
 
     public void refresh()
     {
-        innerPanel.removeAll();
-        innerPanel.revalidate();
+        INNER_PANEL.removeAll();
+        INNER_PANEL.revalidate();
         ArrayList<TaskPanel> panels = new ArrayList<>();
         for (Task task : currentSchedule)
         {
             panels.add(new TaskPanel(task,this));
         }
 
-        new TaskScanner(this,"Done:") {
+        new TaskScanner(INNER_PANEL,"Done:") {
             @Override
             protected boolean validate(Task task) {
-                return task.isComplete();
-            }
+                return task.isComplete(); }
         }.batchAdd(panels);
-        new TaskScanner(this,"Assignments:") {
+        new TaskScanner(INNER_PANEL,"Assignments:") {
             @Override
             protected boolean validate(Task task) {
                 return true;
             }
         }.batchAdd(panels);
 
-        innerPanel.revalidate();
+        INNER_PANEL.revalidate();
     }
 
 
