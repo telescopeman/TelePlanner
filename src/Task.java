@@ -35,6 +35,11 @@ public class Task {
         }
     }
 
+    public LocalDate getDoneDate()
+    {
+        return doneDate;
+    }
+
     public void setPossible(boolean possible)
     {
         this.possible = possible;

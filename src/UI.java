@@ -5,11 +5,11 @@ import javax.swing.BoxLayout;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
 public class UI extends JFrame {
     public static final int WIDTH = 800;
     private static final int HEIGHT = 1200;
     private final JPanel innerPanel = new JPanel();
+    private ArrayList<Task> currentSchedule;
 
     public static void main(String [] args)
     {
@@ -27,7 +27,8 @@ public class UI extends JFrame {
         add(outer);
 
         Task essay = new Task("Essay", LocalDate.of(2021,9,4));
-        ArrayList<Task> mySchedule = new ArrayList<>();
+
+        final ArrayList<Task> mySchedule = new ArrayList<>();
         mySchedule.add(essay);
         mySchedule.add(new Task("Test", LocalDate.of(2021,9,5)));
         mySchedule.add(new DependentTask("Essay Revisions",
@@ -37,13 +38,27 @@ public class UI extends JFrame {
         load(mySchedule);
 
     }
-
     private void load(ArrayList<Task> schedule)
     {
+        currentSchedule = schedule;
+        load();
+    }
+
+    public void load()
+    {
         innerPanel.removeAll();
-        for (Task task : schedule)
+        innerPanel.revalidate();
+        ArrayList<TaskPanel> panels = new ArrayList<>();
+        for (Task task : currentSchedule)
         {
-            innerPanel.add(new TaskPanel(task));
+            panels.add(new TaskPanel(task,this));
+        }
+
+        innerPanel.add(new HeaderPanel("Assignments"));
+
+        for (TaskPanel taskPanel : panels)
+        {
+            innerPanel.add(taskPanel);
         }
     }
 }
