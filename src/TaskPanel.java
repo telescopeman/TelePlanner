@@ -17,10 +17,15 @@ public class TaskPanel extends LinePanel {
         add(label1);
         add(button);
         button.addActionListener(e -> {
-            task.setComplete();
-            task.setPossible(false);
+            task.markAsComplete();
+
             ui.load();
         });
+        int ind = task.getIndex();
+        if (ind > -1)
+        {
+            button.setText(Alphabet.UPPERCASE.toChar(ind));
+        }
         button.setEnabled(possible);
         add(label2);
     }

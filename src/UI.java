@@ -11,6 +11,7 @@ public class UI extends JFrame {
     private final JPanel innerPanel = new JPanel();
     private ArrayList<Task> currentSchedule;
 
+
     public static void main(String [] args)
     {
         new UI();

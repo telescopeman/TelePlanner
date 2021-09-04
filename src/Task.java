@@ -8,6 +8,13 @@ public class Task {
     private boolean possible = true,
             complete = false;
 
+    protected int myIndex = -1;
+
+    public int getIndex()
+    {
+        return myIndex;
+    }
+
     public Task(String title, LocalDate dueDate)
     {
         this.title = title;
@@ -23,11 +30,12 @@ public class Task {
         return title;
     }
 
-    public void setComplete()
+    public void markAsComplete()
     {
         if (!complete) {
             complete = true;
             doneDate = LocalDate.now();
+            setPossible(false);
             if (hasDependent())
             {
                 dependentTask.setPossible(true);
@@ -102,6 +110,7 @@ public class Task {
     public void setDependent(DependentTask dependentTask)
     {
         this.dependentTask = dependentTask;
+        myIndex = dependentTask.getIndex();
     }
 
 
